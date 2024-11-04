@@ -49,10 +49,10 @@ Enter the adjacency matrix:
 0 4 3 4 5 0
 Enter the source node:
 0
-Shortest distances:
-0 -> 0: 0
-0 -> 1: 2
-0 -> 2: 1
-0 -> 3: 8
-0 -> 4: 9
-0 -> 5: 4
+Shortest distances from node 0:
+To 0 - 0
+To 1 - 2
+To 2 - 1
+To 3 - 8
+To 4 - 10
+To 5 - 6
