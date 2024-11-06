@@ -1,1 +1,104 @@
+AIM Definition:
+AIM refers to the study of fundamental network commands and configuration commands that are used to configure, diagnose, and troubleshoot network settings in a computer or device. The two key words in the AIM definition are:
+
+Network Commands: These are command-line instructions that allow users to interact with and manage the network configuration and network status of a computer system.
+Network Configuration Commands: These commands specifically allow users to configure or change settings related to the network, such as IP addresses, gateways, DNS settings, etc.
+Command Details:
+ipconfig
+
+Definition: Displays the current IP configuration of the system, including IP addresses, subnet mask, and default gateway.
+Usage: ipconfig
+Example Output:
+yaml
+Copy code
+Windows IP Configuration
+Ethernet adapter Ethernet:
+  IPv4 Address.................... : 192.168.6.31
+  Subnet Mask..................... : 255.255.255.0
+  Default Gateway................. : 192.168.6.1
+Explanation: This command provides the IP address information, subnet mask, and default gateway of your network interfaces.
+ipconfig /all
+
+Definition: Provides detailed information about the system’s network configuration, including DNS servers, MAC address, DHCP status, etc.
+Usage: ipconfig /all
+Example Output:
+yaml
+Copy code
+Host Name: PGLAB-31
+Primary Dns Suffix: 
+DHCP Enabled: No
+DNS Servers: 192.168.6.1
+Explanation: Adds more detailed network information compared to ipconfig, including DHCP settings, DNS information, and other network adapter details.
+ping
+
+Definition: Tests the network connectivity to a specified remote host by sending ICMP Echo Request messages.
+Usage: ping [hostname/IP]
+Example:
+Copy code
+ping google.com
+Explanation: Sends four ICMP Echo requests to the given domain or IP address and reports back on the status of the packets (e.g., response time, packet loss).
+nslookup
+
+Definition: Queries the DNS records for a given domain name to resolve its IP address.
+Usage: nslookup [hostname]
+Example:
+Copy code
+nslookup www.gmail.com
+Explanation: It provides information on the IP address and DNS information for the specified domain.
+tracert
+
+Definition: Traces the path taken by packets to reach a remote host. It shows each hop and time to each router along the way.
+Usage: tracert [hostname/IP]
+Example:
+Copy code
+tracert www.gmail.com
+Explanation: Displays each router and the time taken for each hop until the destination is reached, helping diagnose routing issues.
+hostname
+
+Definition: Displays the name of the current machine (computer).
+Usage: hostname
+Example:
+Copy code
+PGLAB-31
+Explanation: Outputs the machine's hostname, which can be used to identify the device on a network.
+systeminfo
+
+Definition: Displays detailed system configuration information, including OS version, hardware configuration, and memory usage.
+Usage: systeminfo
+Example:
+yaml
+Copy code
+OS Name: Microsoft Windows 8.1 Pro
+System Manufacturer: Dell Inc.
+Total Physical Memory: 5,020 MB
+Explanation: Provides details about the machine’s system configuration, including OS, memory, and network adapter.
+pathping
+
+Definition: A combination of ping and tracert that provides both the path taken by the packets and statistical analysis of packet loss at each hop.
+Usage: pathping [hostname/IP]
+Example:
+Copy code
+pathping gmail.com
+Explanation: Combines both trace route information and packet loss details to provide a more comprehensive picture of network performance.
+netstat
+
+Definition: Displays network connections, routing tables, interface statistics, and other networking information.
+Usage: netstat
+Example:
+css
+Copy code
+Active Connections
+Proto Local Address Foreign Address State
+TCP 192.168.6.31:53026 ec2-35-163-171-85:https ESTABLISHED
+Explanation: Shows active TCP connections, listening ports, and the status of each connection.
+arp
+
+Definition: Displays or modifies the Address Resolution Protocol (ARP) cache, which maps IP addresses to physical MAC addresses.
+Usage: arp -a
+Example:
+css
+Copy code
+Internet Address Physical Address Type
+192.168.6.1 2c-c8-1b-69-97-12 dynamic
+Explanation: Shows the MAC addresses associated with IP addresses, which helps in troubleshooting network issues related to IP address resolution.
 
