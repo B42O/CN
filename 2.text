@@ -1,0 +1,190 @@
+1.Enter
+2.>enable
+.#show run
+.config t
+.hostname Uday
+.exit
+.config t
+.line console 0
+.password 123
+.login
+.exit
+.exit
+.exit
+.>enable
+.#config t
+.enable password 456
+.exit
+.exit
+.show run
+.config t
+.enable secret 789
+.exit
+.show run
+.config t
+.service password-encryption
+.exit
+.config t
+.banner motd "Xyz"
+.exit
+.copy running-config startup-config
+
+Objectives
+Part 1: Verify the Default Switch Configuration
+Part 2: Configure a Basic Switch Configuration
+Part 3: Configure a MOTD Banner
+Part 4: Save Configuration Files to NVRAM
+Part 1: Verify the Default Switch Configuration
+Step 1: Enter privileged mode.
+We can access all switch commands from privileged mode. However, because many of the
+
+privileged commands configure operating parameters, privileged access should be password-
+protected to preventunauthorized use.
+
+The privileged EXEC command set includes those commands contained in user EXEC mode, as well as
+the configure command through which access to the remaining command modes are gained.
+a. Click S1 and then the CLI tab. Press <Enter>.
+b. Enter privileged EXEC mode by entering the enable command:
+Switch> enable
+Switch#
+Notice that the prompt changed in the configuration to reflect privileged EXEC mode.
+Step 2: Examine the current switch configuration.
+Enter the show running-config command.
+Switch# show running-config
+Output:
+Current configuration : 1080 bytes
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+
+hostname Switch
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+no ip address
+shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+login
+line vty 5 15
+login
+!
+!
+!
+!
+end
+Part 2: Create a Basic Switch Configuration
+Step 1: Assign a name to a switch.
+
+Switch#configure terminal
+Switch(config)#hostname S1
+S1(config)# exit
+S1#
+
+Step 2: Secure access to the console line.
+To secure access to the console line, access config-line mode and set the console password to letmein.
+S1# configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+S1(config)# line console 0
+S1(config-line)# password letmein
+S1(config-line)#login
+S1(config-line)#exit
+S1(config)# exit
+%SYS-5-CONFIG_I: Configured from console by consoleS1#
+
+Step 3: Verify that console access is secured.
+
+Exit privileged mode to verify that the console port password is in effect.
+S1# exit
+Switch con0 is now available
+Press RETURN to get started.
+User Access Verification
+Password:
+S1>
+
+Step 4: Secure privileged mode access.
+
+Set the enable password to c1$c0. This password protects access to privileged mode.
+S1> enable
+S1# configure terminal
+S1(config)# enable password c1$c0
+S1(config)# exit
+%SYS-5-CONFIG_I: Configured from console by consoleS1#
+Step 5: Verify that privileged mode access is secure.
+a. Enter the exit command again to log out of the switch.
+b. Press <Enter> and you will now be asked for a password:
+User Access Verification
+Password:
+c. The first password is the console password configured for line con 0. Enter this password to
+return touser EXEC mode.
+d. Enter the command to access privileged mode.
+e. Enter the second password we configured to protect privileged EXEC mode.
+f. Verify your configurations by examining the contents of the running-configuration file:
+S1# show running-config
+
+Output:
+Current configuration : 1125 bytes
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname s1
+!
+enable password c1$c0
+line con 0
+password letmein
+login
+Step 6: Configure an encrypted password to secure access to privileged mode.
+The enable password should be replaced with the newer encrypted secret password using the
+enablesecret command. Set the enable secret password to itsasecret.
+S1# config t
+S1(config)# enable secret itsasecret
+S1(config)# exit
+S1#
+Step 7: Verify that the enable secret password is added to the configuration file.
+
+Enter the show running-config command again to verify the new enable secret password is
+configured.
+S1# show run
+Output:
+hostname s1
+!
+enable secret 5 $1$mERr$ILwq/b7kc.7X/ejA4Aosn0
+enable password c1$c0
+Step 8: Encrypt the enable and console passwords.
+As noticed in Step 7, the enable secret password was encrypted, but the enable and
+consolepasswords were still in plain text. We will now encrypt these plain text passwords
+using the servicepassword-encryption command.
+S1# config t
+S1(config)# service password-encryption
+S1(config)# exit
+
+Part 3: Configure a MOTD Banner
+Step 1: Configure a message of the day (MOTD) banner.
+The Cisco IOS command set includes a feature that allows to configure messages that anyone
+logging onto the switch sees. These messages are called message of the day, or MOTD banners.
+Enclose the bannertext in quotations or use a delimiter different from any character appearing in the
+MOTD string.
+S1# config t
+S1(config)# banner motd "This is a secure system. Authorized Access Only!"
+S1(config)# exit
+%SYS-5-CONFIG_I: Configured from console by consoleS1#
